@@ -6,5 +6,6 @@ package com.github.curriculeon.arcade.numberguess;
 public class NumberGuessGame {
     public void run() {
         System.out.println("Hello world");
+        System.out.println("Running the number guess game");
     }
 }
