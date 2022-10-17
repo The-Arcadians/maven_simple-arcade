@@ -11,6 +11,8 @@ import com.github.curriculeon.arcade.slots.SlotsPlayer;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
 
+import java.io.IOException;
+
 /**
  * Created by leon on 7/21/2020.
  */
@@ -20,7 +22,12 @@ public class Arcade implements Runnable {
     @Override
     public void run() {
         String arcadeDashBoardInput;
-        ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
+        ArcadeAccountManager arcadeAccountManager = null;
+        try {
+            arcadeAccountManager = new ArcadeAccountManager();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
             if ("select-game".equals(arcadeDashBoardInput)) {
@@ -48,8 +55,16 @@ public class Arcade implements Runnable {
                 console.println("Welcome to the account-creation screen.");
                 String accountName = console.getStringInput("Enter your account name:");
                 String accountPassword = console.getStringInput("Enter your account password:");
-                ArcadeAccount newAccount = arcadeAccountManager.createAccount(accountName, accountPassword);
-                arcadeAccountManager.registerAccount(newAccount);
+                if (arcadeAccountManager.getAccountUsernames().contains(accountName)){
+                    System.out.println("This username already exists" + "\n");
+                } else {
+                    arcadeAccountManager.createAccount(accountName, accountPassword);
+                    try {
+                        arcadeAccountManager.updateAccounts();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         } while (!"logout".equals(arcadeDashBoardInput));
     }
