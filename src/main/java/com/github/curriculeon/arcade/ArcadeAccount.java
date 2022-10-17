@@ -15,7 +15,7 @@ public class ArcadeAccount {
         this.password = password;
     }
 
-    public String getUserName() {
+    public String  getUserName() {
         return userName;
     }
 
