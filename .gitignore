@@ -559,4 +559,7 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
+# ignore all .txt files
+*.txt
+
 # End of https://www.gitignore.io/api/eclipse,intellij,netbeans,notepadpp,sublimetext,visualstudio
