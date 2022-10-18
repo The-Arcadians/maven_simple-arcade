@@ -8,6 +8,8 @@ import com.github.curriculeon.arcade.numberguess.NumberGuessGame;
 import com.github.curriculeon.arcade.numberguess.NumberGuessPlayer;
 import com.github.curriculeon.arcade.slots.SlotsGame;
 import com.github.curriculeon.arcade.slots.SlotsPlayer;
+import com.github.curriculeon.arcade.tictactoe.TicTacToeGame;
+import com.github.curriculeon.arcade.tictactoe.TicTacToePlayer;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
 
@@ -31,9 +33,11 @@ public class Arcade implements Runnable {
                 if (isValidLogin) {
                     String gameSelectionInput = getGameSelectionInput().toUpperCase();
                     if (gameSelectionInput.equals("SLOTS")) {
-                        play(new SlotsGame(), new SlotsPlayer());
+                        play(new SlotsGame(), new SlotsPlayer(arcadeAccount));
                     } else if (gameSelectionInput.equals("NUMBERGUESS")) {
-                        play(new NumberGuessGame(), new NumberGuessPlayer());
+                        play(new NumberGuessGame(), new NumberGuessPlayer(arcadeAccount));
+                    } else if (gameSelectionInput.equals("TIC TAC TOE")) {
+                        play(new TicTacToeGame(), new TicTacToePlayer(arcadeAccount));
                     } else {
                         // TODO - implement better exception handling
                         String errorMessage = "[ %s ] is an invalid game selection";
