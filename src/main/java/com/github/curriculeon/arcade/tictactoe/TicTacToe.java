@@ -4,6 +4,7 @@ import com.github.curriculeon.arcade.GameInterface;
 import com.github.curriculeon.arcade.PlayerInterface;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
+import com.github.curriculeon.utils.Sleep;
 
 import java.util.Objects;
 import java.util.Random;
@@ -110,6 +111,7 @@ public class TicTacToe implements GameInterface {
             default:
                 System.out.println("This is not a valid play.");
         }
+
     }
 
     private void computerPlay(String[][] board){
@@ -135,6 +137,7 @@ public class TicTacToe implements GameInterface {
                 System.out.println(userInput + " is not a valid move.");
             }
         }
+        playerMove(userInterface, userInput, "X");
     }
 
     public boolean declareWinner(String[][] board, String symbol){
@@ -189,9 +192,21 @@ public class TicTacToe implements GameInterface {
         System.out.println(userInterface[2][0] + " | " +  userInterface[2][1] + " | " + userInterface[2][2] );
     }
 
+    public void printSleepyBannerLineByLine(String message, int milliseconds){
+        String[] stringArray = message.split("\n");
+        int len = stringArray.length;
+        for(int i = 0; i < len; i++){
+            Sleep.sleep(milliseconds);
+            System.out.print(stringArray[i]);
+            if (i < len - 1) System.out.print("\n");
+        }
+    }
+
+
     @Override
     public String printInstructions() {
-        return ":::: Welcome to Arcadian Tic Tac Toe ::::";
+        printSleepyBannerLineByLine("test", 200);
+        return null;
     }
 
     @Override
