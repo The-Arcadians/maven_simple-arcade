@@ -1,11 +1,9 @@
 package com.github.curriculeon.arcade.tictactoe;
 
-import com.github.curriculeon.arcade.PlayerInterface;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
 import com.github.curriculeon.utils.Sleep;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public interface TicTacToeInterface {
@@ -20,16 +18,23 @@ public interface TicTacToeInterface {
     }
 
     default void run() {
-        do {
+        while (true) {
+            setBoard(new TicTacToeBoard());
             getConsole().println(getInstructions());
-            while (isRoundComplete()) {
+
+            while (!isRoundComplete()) {
                 userPlay();
                 computerPlay();
                 getConsole().println(getBoard().toString());
             }
-        } while(getConsole().getIntegerInput("(1) Play Again (2) Quit") != 2);
-
+            Integer playAgainInput = getConsole().getIntegerInput("(1) Play Again (2) Quit");
+            if (playAgainInput == 2) {
+                break;
+            }
+        }
     }
+
+    void setBoard(TicTacToeBoard ticTacToeBoard);
 
     default void computerPlay() {
         Integer randomSelection;
@@ -37,7 +42,7 @@ public interface TicTacToeInterface {
         do {
             randomSelection = ThreadLocalRandom.current().nextInt(1, 9);
             isInvalidPlay = !getBoard().isValidPlay(randomSelection);
-            if(isInvalidPlay) {
+            if (isInvalidPlay) {
                 new IOConsole(AnsiColor.RED).println("Invalid play!");
             }
         } while (isInvalidPlay);
@@ -50,8 +55,8 @@ public interface TicTacToeInterface {
         do {
             randomSelection = getConsole().getIntegerInput("Where would you like to play? Choose 1-9");
             isInvalidPlay = !getBoard().isValidPlay(randomSelection);
-            if(isInvalidPlay) {
-               new IOConsole(AnsiColor.RED).println("Invalid play!");
+            if (isInvalidPlay) {
+                new IOConsole(AnsiColor.RED).println("Invalid play!");
             }
         } while (isInvalidPlay);
         getBoard().setCellByIndex(randomSelection, "X");
