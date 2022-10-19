@@ -20,15 +20,15 @@ public class TicTacToeBoardTest {
 
     private void testSetCell(int index, int row, int column) {
         // given
-        TicTacToeBoard board = new TicTacToeBoard();
-        String preSetCell = board.getCellByIndex(index);
-        String expected = "SYMBOL";
+        final TicTacToeBoard board = new TicTacToeBoard();
+        final String[][] matrix = board.getMatrix();
+        final String preSetCell = matrix[row][column];
+        final String expected = "SYMBOL";
         Assert.assertNotEquals(preSetCell, expected);
 
         // when
         board.setCellByIndex(index, expected);
-        String[][] matrix = board.getMatrix();
-        String actual = matrix[row][column];
+        final String actual = matrix[row][column];
 
         // then
         Assert.assertEquals(expected, actual);
