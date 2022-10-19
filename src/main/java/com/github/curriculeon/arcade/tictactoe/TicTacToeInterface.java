@@ -1,63 +1,60 @@
 package com.github.curriculeon.arcade.tictactoe;
 
 import com.github.curriculeon.arcade.PlayerInterface;
+import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
 import com.github.curriculeon.utils.Sleep;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public interface TicTacToeInterface {
+    default String getInstructions() {
+        String[][] controls = {
+                {"1", "2", "3"},
+                {"4", "5", "6"},
+                {"7", "8", "9"}
+        };
+        String result = new TicTacToeBoard(controls).toString();
+        return result;
+    }
 
     default void run() {
-        while (true) {
-            getBoard().displayControls();
-
-            while (true) {
+        do {
+            getConsole().println(getInstructions());
+            while (isRoundComplete()) {
                 userPlay();
-                if (isRoundComplete()) {
-                    break;
-                }
-                getBoard().displayBoard();
-
                 computerPlay();
-                if (isRoundComplete()) {
-                    break;
-                }
-                getBoard().displayBoard();
+                getConsole().println(getBoard().toString());
             }
-            Integer playAgainInput = getConsole().getIntegerInput("(1) Play Again (2) Quit");
-            if (playAgainInput == 2) {
-                break;
-            }
-        }
+        } while(getConsole().getIntegerInput("(1) Play Again (2) Quit") != 2);
 
     }
 
     default void computerPlay() {
-        Random rand = new Random();
-        Integer computerMove = null;
-        while (true) {
-            computerMove = rand.nextInt(9) + 1;
-            if (getBoard().isValidPlay(Integer.toString(computerMove))) {
-                break;
+        Integer randomSelection;
+        Boolean isInvalidPlay;
+        do {
+            randomSelection = ThreadLocalRandom.current().nextInt(1, 9);
+            isInvalidPlay = !getBoard().isValidPlay(randomSelection);
+            if(isInvalidPlay) {
+                new IOConsole(AnsiColor.RED).println("Invalid play!");
             }
-        }
-        System.out.println("Computer played " + computerMove);
-        getBoard().setCellByIndex(computerMove, "O");
+        } while (isInvalidPlay);
+        getBoard().setCellByIndex(randomSelection, "O");
     }
 
     default void userPlay() {
-        String userInput;
-        while (true) {
-            userInput = getConsole().getStringInput("Where would you like to play? Choose 1-9");
-            if (getBoard().isValidPlay(userInput)) {
-                getBoard().setCellByIndex(Integer.parseInt(userInput), "X");
-                break;
-            } else {
-                System.out.println(userInput + " is not a valid move.");
+        Integer randomSelection;
+        Boolean isInvalidPlay;
+        do {
+            randomSelection = getConsole().getIntegerInput("Where would you like to play? Choose 1-9");
+            isInvalidPlay = !getBoard().isValidPlay(randomSelection);
+            if(isInvalidPlay) {
+               new IOConsole(AnsiColor.RED).println("Invalid play!");
             }
-        }
-        getBoard().displayBoard();
+        } while (isInvalidPlay);
+        getBoard().setCellByIndex(randomSelection, "X");
     }
 
     default boolean isRoundComplete() {

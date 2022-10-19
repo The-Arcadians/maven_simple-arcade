@@ -72,7 +72,7 @@ public class NumberGuessGame implements GameInterface {
     }
 
     @Override
-    public String printInstructions() {
+    public String getInstructions() {
         return null;
     }
 }

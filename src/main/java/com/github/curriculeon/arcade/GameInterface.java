@@ -31,5 +31,5 @@ public interface GameInterface extends Runnable {
      */
     void run();
 
-    String printInstructions();
+    String getInstructions();
 }

@@ -114,7 +114,7 @@ public class SlotsGame implements GameInterface {
 
 
     @Override
-    public String printInstructions() {
+    public String getInstructions() {
         return null;
     }
 }

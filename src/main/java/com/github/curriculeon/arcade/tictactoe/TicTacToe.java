@@ -29,33 +29,25 @@ public class TicTacToe implements GameInterface, TicTacToeInterface {
     }
 
     @Override
-    public String printInstructions() {
-        getBoard().displayControls();
-        return null;
-    }
-
-    @Override
     public void run() {
         while (true) {
             this.board = new TicTacToeBoard();
-            while (true) {
-                userPlay();
-                if (isRoundComplete()) {
-                    break;
-                }
-                getBoard().displayBoard();
+            getConsole().println(getInstructions());
 
+            while (!isRoundComplete()) {
+                userPlay();
                 computerPlay();
-                if (isRoundComplete()) {
-                    break;
-                }
-                getBoard().displayBoard();
+                getConsole().println(getBoard().toString());
             }
             Integer playAgainInput = getConsole().getIntegerInput("(1) Play Again (2) Quit");
             if (playAgainInput == 2) {
                 break;
             }
         }
+    }
 
+    @Override
+    public String getInstructions() {
+        return TicTacToeInterface.super.getInstructions();
     }
 }
