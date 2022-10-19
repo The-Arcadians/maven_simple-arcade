@@ -34,8 +34,6 @@ public interface TicTacToeInterface {
         }
     }
 
-    void setBoard(TicTacToeBoard ticTacToeBoard);
-
     default void computerPlay() {
         Integer randomSelection;
         Boolean isInvalidPlay;
@@ -77,17 +75,9 @@ public interface TicTacToeInterface {
         return true;
     }
 
-    default void printSleepyBannerLineByLine(String message, int milliseconds) {
-        String[] stringArray = message.split("\n");
-        int len = stringArray.length;
-        for (int i = 0; i < len; i++) {
-            Sleep.sleep(milliseconds);
-            System.out.print(stringArray[i]);
-            if (i < len - 1) System.out.print("\n");
-        }
-    }
-
     IOConsole getConsole();
 
     TicTacToeBoard getBoard();
+
+    void setBoard(TicTacToeBoard ticTacToeBoard);
 }
