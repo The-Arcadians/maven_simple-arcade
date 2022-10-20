@@ -12,27 +12,35 @@ import java.util.Random;
  */
 public class NumberGuessGame implements GameInterface {
 
+    public String[] firstWrongMessage = new String[]{"Strike one! Try again.",
+            "Wrong answer. here's a hint for your next try.",
+            "Not quite. Maybe this will help.",
+            "No, but we have more chances.",
+            "Incorrect. Try again."};
+    public String[] secondWrongMessage = new String[]{"Strike two! One more and you're O U T!",
+            "Still off. I got one more hint for your last guess.",
+            "Eeh...lets narrow it down some more for our final chance.",
+            "No no no. And we're on the last guess...",
+            "Incorrect. Last try."};
+
     private Random random = new Random();
-
-    private IOConsole console = new IOConsole(AnsiColor.GREEN);
-
-    @Override
-    public void add(PlayerInterface player) {
-
-    }
+    private IOConsole console = new IOConsole(AnsiColor.AUTO);
+    private IOConsole wrongAnswerConsole = new IOConsole(AnsiColor.RED);
 
     @Override
-    public void remove(PlayerInterface player) {
+    public void add(PlayerInterface player) {}
 
-    }
+    @Override
+    public void remove(PlayerInterface player) {}
 
     @Override
     public void run() {
-        Integer randomNumber = 0;
-        randomNumber = random.nextInt(40);
+        Integer randomNumber = random.nextInt(39) + 1;
         Integer playerGuessOne = 0;
         Integer playerGuessTwo = 0;
         Integer playerGuessThree = 0;
+        Integer randomResponseNumber = random.nextInt(5);
+
         System.out.println(randomNumber); // Remove on completion, shows the answer.
 
         console.println("Welcome to the Number Guess Game!");
@@ -49,7 +57,7 @@ public class NumberGuessGame implements GameInterface {
         if (!playerGuessOne.equals(randomNumber)) {
             //Give player hint 1
 
-            console.println("\nStrike one! Try again!");
+            wrongAnswerConsole.println("\n" + firstWrongMessage[randomResponseNumber]);
 
 
             if (randomNumber <= 20) {
@@ -69,7 +77,7 @@ public class NumberGuessGame implements GameInterface {
             if (!playerGuessTwo.equals(randomNumber)) {
 
 
-                console.println("\nNot quite! Try again!");
+                wrongAnswerConsole.println("\n" + secondWrongMessage[randomResponseNumber]);
 
 
                 //Get guess 3, giving a hint to make it easier.
@@ -88,12 +96,12 @@ public class NumberGuessGame implements GameInterface {
 
 
                 if (playerGuessThree.equals(randomNumber)) {
-                    console.println("\n" + randomNumber + " You got it!");
+                    console.println("\n" + randomNumber + "!" + " You got it!");
                     console.println(GameInterface.winnerMessage);
                 }
                 if (!playerGuessThree.equals(randomNumber)) {
-                    console.println("\nSorry, you lose ");
-                    console.println(GameInterface.loserMessage);
+                    wrongAnswerConsole.println("\nSorry, you lose ");
+                    wrongAnswerConsole.println(GameInterface.loserMessage);
                 }
 
             }
