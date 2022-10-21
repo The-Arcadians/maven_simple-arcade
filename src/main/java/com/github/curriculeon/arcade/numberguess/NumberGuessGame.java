@@ -12,6 +12,7 @@ import java.util.Random;
  */
 public class NumberGuessGame implements GameInterface {
 
+
     public String[] firstWrongMessage = new String[]{"Strike one! Try again.",
             "Wrong answer. here's a hint for your next try.",
             "Not quite. Maybe this will help.",
@@ -35,78 +36,95 @@ public class NumberGuessGame implements GameInterface {
 
     @Override
     public void run() {
-        Integer randomNumber = random.nextInt(39) + 1;
-        Integer playerGuessOne = 0;
-        Integer playerGuessTwo = 0;
-        Integer playerGuessThree = 0;
-        Integer randomResponseNumber = random.nextInt(5);
+        boolean play;
+        do {
+            play = true;
+            Integer randomNumber = random.nextInt(39) + 1;
+            Integer playerGuessOne = 0;
+            Integer playerGuessTwo = 0;
+            Integer playerGuessThree = 0;
+            Integer randomResponseNumber = random.nextInt(5);
 
-        System.out.println(randomNumber); // Remove on completion, shows the answer.
+            System.out.println(randomNumber); // Remove on completion, shows the answer.
 
-        console.println("Welcome to the Number Guess Game!");
-        console.println("I have a number between 1-40. Guess correctly and you win! (Three chances)");
+            console.println("Welcome to the Number Guess Game!");
+            console.println("I have a number between 1-40. Guess correctly and you win! (Three chances)");
 
-        //Ask player to guess random number.
-        playerGuessOne = console.getIntegerInput("\nEnter your guess below:");
-        //if it's the right number they win yay!
-        if (playerGuessOne.equals(randomNumber)) {
-            console.println(randomNumber + "!" + " You got it!");
-            console.println(GameInterface.winnerMessage);
-
-        }
-        if (!playerGuessOne.equals(randomNumber)) {
-            //Give player hint 1
-
-            wrongAnswerConsole.println("\n" + firstWrongMessage[randomResponseNumber]);
-
-
-            if (randomNumber <= 20) {
-                playerGuessTwo = console.getIntegerInput("\nHint: The number is somewhere between 1-20");
-            }
-            if (randomNumber > 20) {
-                playerGuessTwo = console.getIntegerInput("\nHint: The number is somewhere between 21-40");
-            }
-
-
-            if (playerGuessTwo.equals(randomNumber)) {
-                console.println("\n" + randomNumber + "!" + " You got it!");
+            //Ask player to guess random number.
+            playerGuessOne = console.getIntegerInput("\nEnter your guess below:");
+            //if it's the right number they win yay!
+            if (playerGuessOne.equals(randomNumber)) {
+                console.println(randomNumber + "!" + " You got it!");
                 console.println(GameInterface.winnerMessage);
+
+                String playAgain = console.getStringInput("Play again? enter (Y)es or (N)o").toUpperCase();
+                if (playAgain.equals("N")){
+                    play = false;};
+
+
+
             }
+            if (!playerGuessOne.equals(randomNumber)) {
+                //Give player hint 1
+
+                wrongAnswerConsole.println("\n" + firstWrongMessage[randomResponseNumber]);
 
 
-            if (!playerGuessTwo.equals(randomNumber)) {
-
-
-                wrongAnswerConsole.println("\n" + secondWrongMessage[randomResponseNumber]);
-
-
-                //Get guess 3, giving a hint to make it easier.
-                if (randomNumber <= 10) {
-                    playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 1-10");
+                if (randomNumber <= 20) {
+                    playerGuessTwo = console.getIntegerInput("\nHint: The number is somewhere between 1-20");
                 }
-                if (randomNumber > 10 && randomNumber <= 20) {
-                    playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 11-20");
-                }
-                if (randomNumber > 20 && randomNumber <= 30) {
-                    playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 21-30");
-                }
-                if (randomNumber > 30 && randomNumber <= 40) {
-                    playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 31-40");
+                if (randomNumber > 20) {
+                    playerGuessTwo = console.getIntegerInput("\nHint: The number is somewhere between 21-40");
                 }
 
 
-                if (playerGuessThree.equals(randomNumber)) {
+                if (playerGuessTwo.equals(randomNumber)) {
                     console.println("\n" + randomNumber + "!" + " You got it!");
                     console.println(GameInterface.winnerMessage);
+                    String playAgain = console.getStringInput("Play again? enter (Y)es or (N)o").toUpperCase();
+                    if (playAgain.equals("N")){
+                        play = false;};
                 }
-                if (!playerGuessThree.equals(randomNumber)) {
-                    wrongAnswerConsole.println("\nSorry, you lose ");
-                    wrongAnswerConsole.println(GameInterface.loserMessage);
                 }
 
-            }
 
-        }
+                if (!playerGuessTwo.equals(randomNumber)) {
+
+
+                    wrongAnswerConsole.println("\n" + secondWrongMessage[randomResponseNumber]);
+
+
+                    //Get guess 3, giving a hint to make it easier.
+                    if (randomNumber <= 10) {
+                        playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 1-10");
+                    }
+                    if (randomNumber > 10 && randomNumber <= 20) {
+                        playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 11-20");
+                    }
+                    if (randomNumber > 20 && randomNumber <= 30) {
+                        playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 21-30");
+                    }
+                    if (randomNumber > 30 && randomNumber <= 40) {
+                        playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 31-40");
+                    }
+
+
+                    if (playerGuessThree.equals(randomNumber)) {
+                        console.println("\n" + randomNumber + "!" + " You got it!");
+                        console.println(GameInterface.winnerMessage);
+                    }
+                    if (!playerGuessThree.equals(randomNumber)) {
+                        wrongAnswerConsole.println("\nSorry, you lose ");
+                        wrongAnswerConsole.println(GameInterface.loserMessage);
+                    }
+
+                    String playAgain = console.getStringInput("Play again? enter (Y)es or (N)o").toUpperCase();
+                    if (playAgain.equals("N")){
+                        play = false;};
+                    }
+
+                }
+        while (play);
     }
 
     @Override
