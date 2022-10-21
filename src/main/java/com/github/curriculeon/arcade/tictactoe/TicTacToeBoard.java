@@ -9,6 +9,11 @@ public class TicTacToeBoard {
     private IOConsole console;
     private String[][] userInterface;
 
+    public TicTacToeBoard(String[][] userInterface) {
+        this.userInterface = userInterface;
+        this.console = new IOConsole(AnsiColor.BLUE);
+    }
+
     public TicTacToeBoard() {
         this(new String[][]{
                 {" ", " ", " "},
@@ -17,9 +22,8 @@ public class TicTacToeBoard {
         });
     }
 
-    public TicTacToeBoard(String[][] userInterface) {
-        this.userInterface = userInterface;
-        this.console = new IOConsole(AnsiColor.BLUE);
+    public boolean isValidPlay(int selection) {
+        return " ".equals(getCellByIndex(selection));
     }
 
     public void setCellByIndex(int cellIndex, String symbol) {
@@ -33,10 +37,6 @@ public class TicTacToeBoard {
             console.println("This is not a valid play.");
             console.println("[ %s , %s ] has a value of [ %s ].", rowSelection, columnSelection, cell);
         }
-    }
-
-    public boolean isValidPlay(int selection) {
-        return " ".equals(getCellByIndex(selection));
     }
 
     public String getCellByIndex(int cellIndex) {
