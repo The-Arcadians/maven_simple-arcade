@@ -95,17 +95,14 @@ public class NumberGuessGame implements GameInterface {
 
 
                     //Get guess 3, giving a hint to make it easier.
-                    if (randomNumber <= 10) {
-                        playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 1-10");
-                    }
-                    if (randomNumber > 10 && randomNumber <= 20) {
-                        playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 11-20");
-                    }
-                    if (randomNumber > 20 && randomNumber <= 30) {
-                        playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 21-30");
-                    }
-                    if (randomNumber > 30 && randomNumber <= 40) {
-                        playerGuessThree = console.getIntegerInput("\nHint: The number is somewhere between 31-40");
+                    int incrementValue = 10;
+                    int maxValue = 50;
+                    for(int minNumberToGuess=1; minNumberToGuess<maxValue; minNumberToGuess+=incrementValue) {
+                        int maxNumberToGuess = minNumberToGuess + incrementValue;
+                        if(randomNumber >  minNumberToGuess && randomNumber <= maxNumberToGuess) {
+                            String message = "\nHint: The number is somewhere between %s-%s";
+                            playerGuessThree = console.getIntegerInput(message, minNumberToGuess, maxNumberToGuess);
+                        }
                     }
 
 
