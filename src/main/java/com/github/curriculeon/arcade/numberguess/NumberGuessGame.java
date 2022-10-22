@@ -59,7 +59,8 @@ public class NumberGuessGame implements GameInterface {
 
                 String playAgain = console.getStringInput("Play again? enter (Y)es or (N)o").toUpperCase();
                 if (playAgain.equals("N")){
-                    play = false;};
+                    play = false;
+                break;};
 
 
 
@@ -98,7 +99,7 @@ public class NumberGuessGame implements GameInterface {
                     int incrementValue = 10;
                     int maxValue = 40;
                     for(int minNumberToGuess=1; minNumberToGuess<maxValue; minNumberToGuess+=incrementValue) {
-                        int maxNumberToGuess = minNumberToGuess + incrementValue;
+                        int maxNumberToGuess = minNumberToGuess + incrementValue - 1;
                         if(randomNumber >  minNumberToGuess && randomNumber <= maxNumberToGuess) {
                             String message = "\nHint: The number is somewhere between %s-%s";
                             playerGuessThree = console.getIntegerInput(message, minNumberToGuess, maxNumberToGuess);
