@@ -1,15 +1,20 @@
 package com.github.curriculeon.arcade;
 
+import java.util.List;
+
 /**
  * Created by leon on 7/21/2020.
  */
 public interface GameInterface extends Runnable {
+    List<PlayerInterface> getPlayers();
     /**
      * adds a player to the game
      *
      * @param player the player to be removed from the game
      */
-    void add(PlayerInterface player);
+    default void add(PlayerInterface player) {
+        getPlayers().add(player);
+    }
 
     String loserMessage = "____    ____  ______    __    __      __        ______        _______. _______ \n" +
             "\\   \\  /   / /  __  \\  |  |  |  |    |  |      /  __  \\      /       ||   ____|\n" +
@@ -31,7 +36,9 @@ public interface GameInterface extends Runnable {
      *
      * @param player the player to be removed from the game
      */
-    void remove(PlayerInterface player);
+    default void remove(PlayerInterface player) {
+        getPlayers().remove(player);
+    }
 
 
     /**
@@ -39,5 +46,5 @@ public interface GameInterface extends Runnable {
      */
     void run();
 
-    String printInstructions();
+    String getInstructions();
 }

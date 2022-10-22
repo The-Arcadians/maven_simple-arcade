@@ -5,6 +5,7 @@ import com.github.curriculeon.arcade.PlayerInterface;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -30,6 +31,11 @@ public class SlotsGame implements GameInterface {
         return null;
     }
 
+
+    @Override
+    public List<PlayerInterface> getPlayers() {
+        return null;
+    }
 
     @Override
     public void add(PlayerInterface player) {
@@ -108,7 +114,7 @@ public class SlotsGame implements GameInterface {
 
 
     @Override
-    public String printInstructions() {
+    public String getInstructions() {
         return null;
     }
 }

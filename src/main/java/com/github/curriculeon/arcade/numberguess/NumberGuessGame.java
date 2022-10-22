@@ -5,6 +5,7 @@ import com.github.curriculeon.arcade.PlayerInterface;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -29,7 +30,14 @@ public class NumberGuessGame implements GameInterface {
     private IOConsole wrongAnswerConsole = new IOConsole(AnsiColor.RED);
 
     @Override
-    public void add(PlayerInterface player) {}
+    public List<PlayerInterface> getPlayers() {
+        return null;
+    }
+
+    @Override
+    public void add(PlayerInterface player) {
+
+    }
 
     @Override
     public void remove(PlayerInterface player) {}
@@ -126,7 +134,7 @@ public class NumberGuessGame implements GameInterface {
     }
 
     @Override
-    public String printInstructions() {
+    public String getInstructions() {
         return null;
     }
 }
