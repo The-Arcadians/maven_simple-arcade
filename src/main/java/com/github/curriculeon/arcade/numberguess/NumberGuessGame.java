@@ -96,7 +96,7 @@ public class NumberGuessGame implements GameInterface {
 
                     //Get guess 3, giving a hint to make it easier.
                     int incrementValue = 10;
-                    int maxValue = 50;
+                    int maxValue = 40;
                     for(int minNumberToGuess=1; minNumberToGuess<maxValue; minNumberToGuess+=incrementValue) {
                         int maxNumberToGuess = minNumberToGuess + incrementValue;
                         if(randomNumber >  minNumberToGuess && randomNumber <= maxNumberToGuess) {
