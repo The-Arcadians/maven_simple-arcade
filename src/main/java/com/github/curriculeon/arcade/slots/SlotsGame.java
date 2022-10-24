@@ -5,6 +5,7 @@ import com.github.curriculeon.arcade.PlayerInterface;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -42,68 +43,68 @@ public class SlotsGame implements GameInterface {
     }
 
 
-
     @Override
     public void run() {
+
+        String[][] demo = {
+                {"0", "1", "2"}
+
+        };
+
+        String[][] userInterface = {
+                {" ", " ", " "}
+        };
+
 
         System.out.println("Welcome to the Slot Machine!");
         //want to input the players username in the message after "Good Luck"
         System.out.println("\nGame Start! You will begin with $50.00 " + "Good Luck!");
         int Balance = 50;
         int bet = 0, remainingBalance = 0, winnings1, winnings2;
-        int sp0, sp1, sp2;
-        //ThreadLocalRandom randomNumberGenerator = ThreadLocalRandom.current();
+        int min = 0;
+        int max = 10;
+
 
         // need to be able to place a bet
         Scanner scanner = new Scanner(System.in);
         System.out.println("Place your bet $");
         bet = scanner.nextInt();
 
-         sp0 = spin(3);
-         sp1 = spin(3);
-         sp2 = spin(3);
-
-        // Random number generator
-        Random generator = new Random();
-
-
-
-
 
 // Winning Solutions = 3 of the same numbers || 2 of the same number win half
-        //if (bet > 0 && bet < Balance) {
-            //Character slot1Position = this.matrix[0];
-            //Character slot2Position = this.matrix[1];
-            //Character slot3Position = this.matrix[2];
+        if (bet > 0 && bet < Balance) {
+            Random randInt;
+            randInt = new Random();
+            int slot1Position;
+            int slot2Position;
+            int slot3Position;
+            slot1Position = randInt.nextInt(10);
+            slot2Position = randInt.nextInt(10);
+            slot3Position = randInt.nextInt(10);
 
 
+            System.out.println("slot1Position, slot2Position, slot3Position");
 
 
-            //if (slot1Position == slot2Position && slot2Position == slot3Position && slot3Position == slot1Position) {
-               // System.out.println("Jackpot!: " + (double) (slot1Position) * bet);
-               // winnings1 = (slot1Position + 1) * bet;
-                //remainingBalance = Balance - bet + winnings1;
-            //} else if (slot1Position == slot2Position || slot2Position == slot3Position) {
-               // System.out.println("You win!: " + (double) (slot2Position * bet) / 2);
-              //  winnings2 = (slot2Position * bet) / 2;
-               // remainingBalance = Balance - bet + winnings2;
+            if (slot1Position == slot2Position && slot2Position == slot3Position && slot3Position == slot1Position) {
+                System.out.println("Jackpot!: ");
+                winnings1 = (slot1Position + 1) * bet;
+                remainingBalance = Balance - bet + winnings1;
+            } else if (slot1Position == slot2Position || slot2Position == slot3Position) {
+                System.out.println("You win!: ");
+                ;
+                winnings2 = (slot2Position * bet) / 2;
+                remainingBalance = Balance - bet + winnings2;
 
-            //} else {
-                //System.out.println("Balance " + (double) (Balance - bet));
-            //}
-        //} else if (bet == 0) {
-            //System.out.println("You earned" + remainingBalance);
+            } else System.out.println("Balance ");
+
+        }
+        if (bet == 0) {
+            System.out.println("You earned" + remainingBalance);
 
         }
 
 
-    //}
-
-    private int spin(int i) {
-        int num;
-        Random random = new Random();
-        num = random.nextInt(20);
-        return num;
     }
 
 
