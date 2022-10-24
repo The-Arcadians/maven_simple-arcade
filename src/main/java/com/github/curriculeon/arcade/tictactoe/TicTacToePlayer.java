@@ -11,7 +11,9 @@ public class TicTacToePlayer implements PlayerInterface {
     }
 
     @Override
-    public <SomeReturnType> SomeReturnType play() {
+    public <SomeReturnType> SomeReturnType play(Object someArgumentType) {
         return null;
     }
+
+
 }

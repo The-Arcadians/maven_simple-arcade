@@ -14,7 +14,7 @@ public class SlotsPlayer implements PlayerInterface {
     }
 
     @Override
-    public <SomeReturnType> SomeReturnType play() {
+    public String play(Object string) {
         return null;
     }
 }
