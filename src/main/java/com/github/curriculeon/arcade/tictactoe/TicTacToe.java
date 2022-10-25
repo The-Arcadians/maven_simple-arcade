@@ -28,7 +28,7 @@ public class TicTacToe extends AbstractGame {
                 special(getBoard().toString());
             } while (!isRoundComplete());
             special("Game over!");
-            special("The winner of the game was [ %s ]", board.getWinner());
+            special("The winner of the game was [ %s ]", getBoard().getWinner());
         }
     }
 

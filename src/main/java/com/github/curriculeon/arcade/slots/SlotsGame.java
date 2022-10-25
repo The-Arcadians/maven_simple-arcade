@@ -24,8 +24,6 @@ public class SlotsGame extends AbstractGame {
                     image3 = SlotsReelImage.getRandom();
                 } else if ("view-slots".equalsIgnoreCase(userInput)) {
                     special("|| %s || %s || %s ||", image1, image2, image3);
-                } else if ("exit".equalsIgnoreCase(userInput)) {
-                    break;
                 }
             } while (!"exit".equalsIgnoreCase(userInput));
         }
