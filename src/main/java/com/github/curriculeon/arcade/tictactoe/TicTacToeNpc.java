@@ -1,8 +1,7 @@
 package com.github.curriculeon.arcade.tictactoe;
 
 import com.github.curriculeon.arcade.ArcadeAccount;
-
-import java.util.concurrent.ThreadLocalRandom;
+import com.github.curriculeon.utils.RandomUtils;
 
 public class TicTacToeNpc extends TicTacToePlayer {
     public TicTacToeNpc(ArcadeAccount arcadeAccount) {
@@ -14,7 +13,7 @@ public class TicTacToeNpc extends TicTacToePlayer {
         super.setCellSelection(
                 (TicTacToe) game,
                 "O",
-                () -> ThreadLocalRandom.current().nextInt(1, 9));
+                () -> RandomUtils.createInteger(1, 9));
         return null;
     }
 }

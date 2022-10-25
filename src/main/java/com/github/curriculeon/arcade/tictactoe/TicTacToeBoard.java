@@ -2,16 +2,15 @@ package com.github.curriculeon.arcade.tictactoe;
 
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
+import com.github.curriculeon.utils.Loggable;
 
 import java.util.StringJoiner;
 
-public class TicTacToeBoard {
-    private IOConsole console;
+public class TicTacToeBoard implements Loggable {
     private String[][] userInterface;
 
     public TicTacToeBoard(String[][] userInterface) {
         this.userInterface = userInterface;
-        this.console = new IOConsole(AnsiColor.BLUE);
     }
 
     public TicTacToeBoard() {
@@ -33,9 +32,8 @@ public class TicTacToeBoard {
         if (isValidPlay(cellIndex)) {
             userInterface[rowSelection][columnSelection] = symbol;
         } else {
-            IOConsole console = new IOConsole(AnsiColor.YELLOW);
-            console.println("This is not a valid play.");
-            console.println("[ %s , %s ] has a value of [ %s ].", rowSelection, columnSelection, cell);
+            error("This is not a valid play.");
+            error("[ %s , %s ] has a value of [ %s ].", rowSelection, columnSelection, cell);
         }
     }
 
@@ -43,8 +41,8 @@ public class TicTacToeBoard {
         IOConsole console = new IOConsole(AnsiColor.YELLOW);
         int rowSelection = (cellIndex - 1) / 3;
         int columnSelection = (cellIndex - 1) % 3;
-        console.println("[ %s ] is the selected cell-index.", cellIndex);
-        console.println("[ %s , %s ] is the selected matrix-index.", rowSelection, columnSelection);
+        warn("[ %s ] is the selected cell-index.", cellIndex);
+        warn("[ %s , %s ] is the selected matrix-index.", rowSelection, columnSelection);
         return userInterface[rowSelection][columnSelection];
     }
 

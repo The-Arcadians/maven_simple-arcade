@@ -1,14 +1,6 @@
 package com.github.curriculeon.arcade.tictactoe;
 
 import com.github.curriculeon.arcade.AbstractGame;
-import com.github.curriculeon.arcade.GameInterface;
-import com.github.curriculeon.arcade.PlayerInterface;
-import com.github.curriculeon.utils.AnsiColor;
-import com.github.curriculeon.utils.IOConsole;
-import com.github.curriculeon.utils.Loggable;
-
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class TicTacToe extends AbstractGame {
     private TicTacToeBoard board;
@@ -30,10 +22,10 @@ public class TicTacToe extends AbstractGame {
         }
         while (true) {
             setBoard(new TicTacToeBoard());
-            getConsole().println(getInstructions());
+            special(getInstructions());
             do {
                 super.run();
-                getConsole().println(getBoard().toString());
+                special(getBoard().toString());
             } while (!isRoundComplete());
             special("Game over!");
             special("The winner of the game was [ %s ]", board.getWinner());

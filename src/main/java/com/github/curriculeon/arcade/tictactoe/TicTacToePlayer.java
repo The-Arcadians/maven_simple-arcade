@@ -2,12 +2,7 @@ package com.github.curriculeon.arcade.tictactoe;
 
 import com.github.curriculeon.arcade.AbstractPlayer;
 import com.github.curriculeon.arcade.ArcadeAccount;
-import com.github.curriculeon.arcade.PlayerInterface;
-import com.github.curriculeon.utils.AnsiColor;
-import com.github.curriculeon.utils.IOConsole;
-import com.sun.istack.internal.Nullable;
 
-import javax.lang.model.type.NullType;
 import java.util.function.Supplier;
 
 public class TicTacToePlayer extends AbstractPlayer {

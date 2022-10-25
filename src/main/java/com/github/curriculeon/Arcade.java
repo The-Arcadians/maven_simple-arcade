@@ -100,4 +100,9 @@ public class Arcade implements Runnable, Loggable {
                     .toString());
         } while (!"quit".equals(userSelection));
     }
+
+    @Override
+    public String selectString(String message, Object... args) {
+        return getConsole(AnsiColor.PURPLE).getStringInput(message, args);
+    }
 }
