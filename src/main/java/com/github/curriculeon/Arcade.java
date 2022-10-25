@@ -55,12 +55,8 @@ public class Arcade implements Runnable, Loggable {
                 info("Welcome to the account-creation screen.");
                 String accountName = selectString("Enter your account name:");
                 String accountPassword = selectString("Enter your account password:");
-                if (arcadeAccountManager.getAccountUsernames().contains(accountName)) {
-                    warn("This username already exists");
-                } else {
-                    arcadeAccountManager.createAccount(accountName, accountPassword);
-                    arcadeAccountManager.updateAccounts();
-                }
+                arcadeAccountManager.createAccount(accountName, accountPassword);
+                arcadeAccountManager.updateAccounts();
             }
         } while (!"logout".equals(arcadeDashBoardInput));
     }
