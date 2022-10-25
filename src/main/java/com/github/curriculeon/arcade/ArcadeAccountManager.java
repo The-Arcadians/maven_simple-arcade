@@ -21,14 +21,19 @@ public class ArcadeAccountManager implements Loggable {
     private static final Path file = Paths.get(System.getProperty("user.dir") + "/src/main/resources/accounts.txt");
     private List<ArcadeAccount> accounts;
 
-    public ArcadeAccountManager() throws IOException {
+    public ArcadeAccountManager() {
         this.accounts = new ArrayList<>();
-        BufferedReader reader = Files.newBufferedReader(file);
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] acctData = line.split(",");
-            ArcadeAccount acct = new ArcadeAccount(acctData[0], acctData[1]);
-            accounts.add(acct);
+        BufferedReader reader;
+        try {
+            reader = Files.newBufferedReader(file);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] acctData = line.split(",");
+                ArcadeAccount acct = new ArcadeAccount(acctData[0], acctData[1]);
+                accounts.add(acct);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -86,7 +91,7 @@ public class ArcadeAccountManager implements Loggable {
             warn("`%s(%s, %s)` resulted in [ %s ]", getCurrentMethod(), accountName, accountPassword, result);
         }
         return result;
-    } 
+    }
 
     /**
      * logs & registers a new `ArcadeAccount` to `this.getArcadeAccountList()`

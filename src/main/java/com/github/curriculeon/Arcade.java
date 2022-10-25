@@ -25,13 +25,7 @@ public class Arcade implements Runnable, Loggable {
     @Override
     public void run() {
         String arcadeDashBoardInput;
-        ArcadeAccountManager arcadeAccountManager = null;
-        HashSet<ArcadeAccount> loggedInAccounts = new HashSet<>();
-        try {
-            arcadeAccountManager = new ArcadeAccountManager();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        ArcadeAccountManager arcadeAccountManager = new ArcadeAccountManager();
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
             if ("select-game".equals(arcadeDashBoardInput)) {
@@ -96,13 +90,13 @@ public class Arcade implements Runnable, Loggable {
             game.run();
             userSelection = selectString(new StringJoiner("\n")
                     .add("Enter [ continue ] to play again.")
-                    .add("Enter [ quit ] to exit the game.")
+                    .add("Enter [ exit ] to exit the game.")
                     .toString());
-        } while (!"quit".equals(userSelection));
+        } while (!"exit".equals(userSelection));
     }
 
     @Override
     public String selectString(String message, Object... args) {
-        return getConsole(AnsiColor.PURPLE).getStringInput(message, args);
+        return getConsole(AnsiColor.BLUE).getStringInput(message, args);
     }
 }
