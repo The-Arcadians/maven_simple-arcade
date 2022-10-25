@@ -1,11 +1,13 @@
 package com.github.curriculeon.arcade;
 
+import com.github.curriculeon.utils.Loggable;
+
 import java.util.List;
 
 /**
  * Created by leon on 7/21/2020.
  */
-public interface GameInterface extends Runnable {
+public interface GameInterface extends Loggable, Runnable {
     List<PlayerInterface> getPlayers();
     /**
      * adds a player to the game

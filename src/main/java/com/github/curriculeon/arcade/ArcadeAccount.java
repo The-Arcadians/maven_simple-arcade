@@ -1,5 +1,7 @@
 package com.github.curriculeon.arcade;
 
+import java.util.Objects;
+
 /**
  * Created by leon on 7/21/2020.
  * ArcadeAccount is registered for each user of the Arcade.
@@ -23,4 +25,16 @@ public class ArcadeAccount {
         return password;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return toString().equals(Objects.requireNonNull(obj));
+    }
+
+    @Override
+    public String toString() {
+        return "ArcadeAccount{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

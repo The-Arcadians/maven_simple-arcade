@@ -1,19 +1,23 @@
 package com.github.curriculeon.arcade.numberguess;
 
+import com.github.curriculeon.arcade.AbstractPlayer;
 import com.github.curriculeon.arcade.ArcadeAccount;
-import com.github.curriculeon.arcade.PlayerInterface;
 
 /**
  * Created by leon on 7/21/2020.
  */
-public class NumberGuessPlayer implements PlayerInterface {
-    @Override
-    public ArcadeAccount getArcadeAccount() {
-        return null;
+public class NumberGuessPlayer extends AbstractPlayer {
+    public NumberGuessPlayer(ArcadeAccount arcadeAccount) {
+        super(arcadeAccount);
     }
 
     @Override
-    public <SomeReturnType> SomeReturnType play() {
-        return null;
+    public String play(Object game) {
+        NumberGuessGame numberGuessGame = (NumberGuessGame) game;
+        return selectString(
+                numberGuessGame.getInstructions(),
+                numberGuessGame.getQuitNumber(),
+                numberGuessGame.getMinimumNumber(),
+                numberGuessGame.getMaximumNumber());
     }
 }

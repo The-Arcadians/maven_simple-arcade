@@ -1,14 +1,16 @@
 package com.github.curriculeon.arcade.tictactoe;
 
+import com.github.curriculeon.arcade.AbstractGame;
 import com.github.curriculeon.arcade.GameInterface;
 import com.github.curriculeon.arcade.PlayerInterface;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
+import com.github.curriculeon.utils.Loggable;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class TicTacToe implements GameInterface {
+public class TicTacToe extends AbstractGame {
     private TicTacToeBoard board;
 
     public String getInstructions() {
@@ -22,46 +24,20 @@ public class TicTacToe implements GameInterface {
     }
 
     public void run() {
+        info("Starting a new game of [ %s ]", getClass().getSimpleName());
+        if(getPlayers().size() < 2) {
+            getPlayers().add(new TicTacToeNpc(null));
+        }
         while (true) {
             setBoard(new TicTacToeBoard());
             getConsole().println(getInstructions());
-
-            while (!isRoundComplete()) {
-                userPlay();
-                computerPlay();
+            do {
+                super.run();
                 getConsole().println(getBoard().toString());
-            }
-            Integer playAgainInput = getConsole().getIntegerInput("(1) Play Again (2) Quit");
-            if (playAgainInput == 2) {
-                break;
-            }
+            } while (!isRoundComplete());
+            special("Game over!");
+            special("The winner of the game was [ %s ]", board.getWinner());
         }
-    }
-
-    public void computerPlay() {
-        Integer randomSelection;
-        Boolean isInvalidPlay;
-        do {
-            randomSelection = ThreadLocalRandom.current().nextInt(1, 9);
-            isInvalidPlay = !getBoard().isValidPlay(randomSelection);
-            if (isInvalidPlay) {
-                new IOConsole(AnsiColor.RED).println("Invalid play!");
-            }
-        } while (isInvalidPlay);
-        getBoard().setCellByIndex(randomSelection, "O");
-    }
-
-    public void userPlay() {
-        Integer randomSelection;
-        Boolean isInvalidPlay;
-        do {
-            randomSelection = getConsole().getIntegerInput("Where would you like to play? Choose 1-9");
-            isInvalidPlay = !getBoard().isValidPlay(randomSelection);
-            if (isInvalidPlay) {
-                new IOConsole(AnsiColor.RED).println("Invalid play!");
-            }
-        } while (isInvalidPlay);
-        getBoard().setCellByIndex(randomSelection, "X");
     }
 
     public boolean isRoundComplete() {
@@ -79,20 +55,11 @@ public class TicTacToe implements GameInterface {
         return true;
     }
 
-    public IOConsole getConsole() {
-        return new IOConsole(AnsiColor.BLUE);
-    }
-
     public void setBoard(TicTacToeBoard ticTacToeBoard) {
         this.board = ticTacToeBoard;
     }
 
     public TicTacToeBoard getBoard() {
         return board;
-    }
-
-    @Override
-    public List<PlayerInterface> getPlayers() {
-        return null;
     }
 }

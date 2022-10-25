@@ -12,16 +12,16 @@ import com.github.curriculeon.arcade.tictactoe.TicTacToe;
 import com.github.curriculeon.arcade.tictactoe.TicTacToePlayer;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
+import com.github.curriculeon.utils.Loggable;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.StringJoiner;
 
 /**
  * Created by leon on 7/21/2020.
  */
-public class Arcade implements Runnable {
-    private final IOConsole console = new IOConsole(AnsiColor.BLUE);
-
+public class Arcade implements Runnable, Loggable {
     @Override
     public void run() {
         String arcadeDashBoardInput;
@@ -35,18 +35,18 @@ public class Arcade implements Runnable {
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
             if ("select-game".equals(arcadeDashBoardInput)) {
-                String accountName = console.getStringInput("Enter your account name:");
-                String accountPassword = console.getStringInput("Enter your account password:");
+                String accountName = selectString("Enter your account name:");
+                String accountPassword = selectString("Enter your account password:");
                 ArcadeAccount arcadeAccount = arcadeAccountManager.getAccount(accountName, accountPassword);
                 boolean isValidLogin = arcadeAccount != null;
                 if (isValidLogin) {
                     String gameSelectionInput = getGameSelectionInput().toUpperCase();
                     if (gameSelectionInput.equals("SLOTS")) {
-                        play(new SlotsGame(), new SlotsPlayer());
+                        play(new SlotsGame(), new SlotsPlayer(arcadeAccount));
                     } else if (gameSelectionInput.equals("NUMBER GUESS")) {
-                        play(new NumberGuessGame(), new NumberGuessPlayer());
+                        play(new NumberGuessGame(), new NumberGuessPlayer(arcadeAccount));
                     } else if (gameSelectionInput.equals("TIC TAC TOE")) {
-                        play(new TicTacToe(), new TicTacToePlayer());
+                        play(new TicTacToe(), new TicTacToePlayer(arcadeAccount));
                     } else {
                         // TODO - implement better exception handling
                         String errorMessage = "[ %s ] is an invalid game selection";
@@ -58,25 +58,21 @@ public class Arcade implements Runnable {
                     throw new RuntimeException(String.format(errorMessage, accountPassword, accountName));
                 }
             } else if ("create-account".equals(arcadeDashBoardInput)) {
-                console.println("Welcome to the account-creation screen.");
-                String accountName = console.getStringInput("Enter your account name:");
-                String accountPassword = console.getStringInput("Enter your account password:");
-                if (arcadeAccountManager.getAccountUsernames().contains(accountName)){
-                    System.out.println("This username already exists" + "\n");
+                info("Welcome to the account-creation screen.");
+                String accountName = selectString("Enter your account name:");
+                String accountPassword = selectString("Enter your account password:");
+                if (arcadeAccountManager.getAccountUsernames().contains(accountName)) {
+                    warn("This username already exists");
                 } else {
                     arcadeAccountManager.createAccount(accountName, accountPassword);
-                    try {
-                        arcadeAccountManager.updateAccounts();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    arcadeAccountManager.updateAccounts();
                 }
             }
         } while (!"logout".equals(arcadeDashBoardInput));
     }
 
     private String getArcadeDashboardInput() {
-        return console.getStringInput(new StringBuilder()
+        return selectString(new StringBuilder()
                 .append("Welcome to the Arcade Dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
                 .append("\n\t[ create-account ], [ select-game ]")
@@ -84,7 +80,7 @@ public class Arcade implements Runnable {
     }
 
     private String getGameSelectionInput() {
-        return console.getStringInput(new StringBuilder()
+        return selectString(new StringBuilder()
                 .append("Welcome to the Game Selection Dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
                 .append("\n\t[ SLOTS ], [ NUMBER GUESS ], [ TIC TAC TOE ]")
@@ -92,9 +88,16 @@ public class Arcade implements Runnable {
     }
 
     private void play(Object gameObject, Object playerObject) {
-        GameInterface game = (GameInterface)gameObject;
-        PlayerInterface player = (PlayerInterface)playerObject;
+        GameInterface game = (GameInterface) gameObject;
+        PlayerInterface player = (PlayerInterface) playerObject;
         game.add(player);
-        game.run();
+        String userSelection;
+        do {
+            game.run();
+            userSelection = selectString(new StringJoiner("\n")
+                    .add("Enter [ continue ] to play again.")
+                    .add("Enter [ quit ] to exit the game.")
+                    .toString());
+        } while (!"quit".equals(userSelection));
     }
 }

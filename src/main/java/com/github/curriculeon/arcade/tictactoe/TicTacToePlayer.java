@@ -1,9 +1,19 @@
 package com.github.curriculeon.arcade.tictactoe;
 
+import com.github.curriculeon.arcade.AbstractPlayer;
 import com.github.curriculeon.arcade.ArcadeAccount;
 import com.github.curriculeon.arcade.PlayerInterface;
+import com.github.curriculeon.utils.AnsiColor;
+import com.github.curriculeon.utils.IOConsole;
+import com.sun.istack.internal.Nullable;
 
-public class TicTacToePlayer implements PlayerInterface {
+import javax.lang.model.type.NullType;
+import java.util.function.Supplier;
+
+public class TicTacToePlayer extends AbstractPlayer {
+    public TicTacToePlayer(ArcadeAccount arcadeAccount) {
+        super(arcadeAccount);
+    }
 
     @Override
     public ArcadeAccount getArcadeAccount() {
@@ -11,7 +21,27 @@ public class TicTacToePlayer implements PlayerInterface {
     }
 
     @Override
-    public <SomeReturnType> SomeReturnType play() {
+    public Void play(Object game) {
+        setCellSelection(
+                (TicTacToe) game,
+                "X",
+                () -> selectInteger("Where would you like to play? Choose 1-9"));
         return null;
+    }
+
+    public void setCellSelection(TicTacToe ticTacToeGame, String symbol, Supplier<Integer> cellSelector) {
+        if (!ticTacToeGame.isRoundComplete()) {
+            TicTacToeBoard ticTacToeBoard = ticTacToeGame.getBoard();
+            Integer selectedCellIndex;
+            Boolean isInvalidPlay;
+            do {
+                selectedCellIndex = cellSelector.get();
+                isInvalidPlay = !ticTacToeBoard.isValidPlay(selectedCellIndex);
+                if (isInvalidPlay) {
+                    error("Invalid play!");
+                }
+            } while (isInvalidPlay);
+            ticTacToeBoard.setCellByIndex(selectedCellIndex, symbol);
+        }
     }
 }
