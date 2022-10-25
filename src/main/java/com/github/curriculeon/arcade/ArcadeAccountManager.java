@@ -57,8 +57,9 @@ public class ArcadeAccountManager implements Loggable {
                 .findFirst()
                 .orElseGet(() -> {
                     warn("Account with username `%s` and password `%s` DOES NOT exist!", accountName, accountPassword);
-                    registerAccount(createAccount(accountName, accountPassword));
-                    return getAccount(accountName, accountPassword);
+                    ArcadeAccount account = createAccount(accountName, accountPassword);
+                    registerAccount(account);
+                    return account;
                 });
         warn("`%s(%s, %s)` was successful!", getCurrentMethod(), accountName, accountPassword);
         warn("`%s(%s, %s)` resulted in [ %s ]", getCurrentMethod(), accountName, accountPassword, result);
@@ -81,16 +82,18 @@ public class ArcadeAccountManager implements Loggable {
      */
     public ArcadeAccount createAccount(String accountName, String accountPassword) {
         warn("Attempting to `%s(%s, %s)`...", getCurrentMethod(), accountName, accountPassword);
-        ArcadeAccount result = null;
+        ArcadeAccount result;
         if (getAccountUsernames().contains(accountName)) {
+            String accountExistsMessage = "Account with username `%s` already exists!";
             warn("`%s(%s, %s)` was NOT successful!", getCurrentMethod(), accountName, accountPassword);
-            warn("Account with username `%s` already exists!", accountName);
+            warn(accountExistsMessage, accountName);
+            throw new IllegalArgumentException(String.format(accountExistsMessage, accountName));
         } else {
             result = new ArcadeAccount(accountName, accountPassword);
             warn("`%s(%s, %s)` was successful!", getCurrentMethod(), accountName, accountPassword);
             warn("`%s(%s, %s)` resulted in [ %s ]", getCurrentMethod(), accountName, accountPassword, result);
+            return result;
         }
-        return result;
     }
 
     /**

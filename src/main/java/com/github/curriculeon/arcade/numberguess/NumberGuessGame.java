@@ -61,9 +61,8 @@ public class NumberGuessGame implements GameInterface {
     public String getInstructions() {
         return String.format(
                 new StringJoiner("\n")
-                        .add("Enter [ %s ] to quit")
-                        .add("or")
-                        .add("Enter [ a random number between %s and %s ]")
+                        .add("Enter [ %s ] to quit.")
+                        .add("Enter [ a random number between %s and %s ] to guess.")
                         .toString(),
                 getQuitNumber(), getMinimumNumber(), getMaximumNumber());
     }

@@ -15,8 +15,7 @@ import com.github.curriculeon.utils.IOConsole;
 import com.github.curriculeon.utils.Loggable;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * Created by leon on 7/21/2020.
@@ -55,26 +54,33 @@ public class Arcade implements Runnable, Loggable {
                 info("Welcome to the account-creation screen.");
                 String accountName = selectString("Enter your account name:");
                 String accountPassword = selectString("Enter your account password:");
-                arcadeAccountManager.createAccount(accountName, accountPassword);
+                ArcadeAccount account = arcadeAccountManager.createAccount(accountName, accountPassword);
+                arcadeAccountManager.registerAccount(account);
                 arcadeAccountManager.updateAccounts();
             }
         } while (!"logout".equals(arcadeDashBoardInput));
     }
 
     private String getArcadeDashboardInput() {
-        return selectString(new StringBuilder()
-                .append("Welcome to the Arcade Dashboard!")
-                .append("\nFrom here, you can select any of the following options:")
-                .append("\n\t[ create-account ], [ select-game ]")
-                .toString());
+        return getLimitedInput("Arcade", "create-account", "select-game");
     }
 
     private String getGameSelectionInput() {
-        return selectString(new StringBuilder()
-                .append("Welcome to the Game Selection Dashboard!")
+        return getLimitedInput("Game Selection", "SLOTS", "NUMBER GUESS", "TIC TAC TOE");
+    }
+
+    private String getLimitedInput(String dashboardName, String... validSelectionArray) {
+        List<String> validSelections = Arrays.asList(validSelectionArray);
+        String userSelection = selectString(new StringBuilder()
+                .append("Welcome to the " + dashboardName + " dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
-                .append("\n\t[ SLOTS ], [ NUMBER GUESS ], [ TIC TAC TOE ]")
+                .append("\n\t" + validSelections)
                 .toString());
+        if (validSelections.contains(userSelection)) {
+            return userSelection;
+        }
+        error("[ %s ] is not a valid selection!", userSelection);
+        return getLimitedInput(dashboardName, validSelectionArray);
     }
 
     private void play(Object gameObject, Object playerObject) {
