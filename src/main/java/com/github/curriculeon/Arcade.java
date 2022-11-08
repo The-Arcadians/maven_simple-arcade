@@ -64,7 +64,8 @@ public class Arcade implements Runnable {
                 if (arcadeAccountManager.getAccountUsernames().contains(accountName)){
                     System.out.println("This username already exists" + "\n");
                 } else {
-                    arcadeAccountManager.createAccount(accountName, accountPassword);
+                    ArcadeAccount newAccount = arcadeAccountManager.createAccount(accountName, accountPassword);
+                    arcadeAccountManager.registerAccount(newAccount);
                     try {
                         arcadeAccountManager.updateAccounts();
                     } catch (IOException e) {

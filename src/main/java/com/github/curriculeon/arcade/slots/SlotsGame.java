@@ -5,10 +5,7 @@ import com.github.curriculeon.arcade.PlayerInterface;
 import com.github.curriculeon.utils.AnsiColor;
 import com.github.curriculeon.utils.IOConsole;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by leon on 7/21/2020.
@@ -16,6 +13,11 @@ import java.util.Scanner;
 public class SlotsGame implements GameInterface {
     private final IOConsole logger = new IOConsole(AnsiColor.YELLOW);
 
+
+    @Override
+    public List<PlayerInterface> getPlayers() {
+        return null;
+    }
 
     @Override
     public void add(PlayerInterface player) {
@@ -87,7 +89,7 @@ public class SlotsGame implements GameInterface {
 
 
     @Override
-    public String printInstructions() {
+    public String getInstructions() {
         return null;
     }
 }
