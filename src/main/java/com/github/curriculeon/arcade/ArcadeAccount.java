@@ -23,4 +23,11 @@ public class ArcadeAccount {
         return password;
     }
 
+    @Override
+    public String toString() {
+        return "ArcadeAccount{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
